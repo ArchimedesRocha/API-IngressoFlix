@@ -6,14 +6,14 @@ import { Entity, PrimaryGeneratedColumn, Column, CreateDateColumn, UpdateDateCol
     @PrimaryGeneratedColumn()
     id: number;
 
-    @Column()
-    thumb: string;
+    @Column({ nullable: true })
+    imageURL: string;
 
     @Column()
     tag: string;
 
     @Column()
-    event_date: Date;
+    event_date_day: string;
 
     @Column()
     title: string;
