@@ -67,23 +67,39 @@ const upload = multer({
   },
 });
 
-export const uploadImageEvent = (req: Request, res: Response) => {
-  upload.single('image')(req, res, (err) => {
+export const uploadImageEvent = async (request: Request, response: Response) => {
+  const { id } = request.params; // Obtém o ID do evento da rota
+
+  upload.single('image')(request, response, async (err) => {
     if (err) {
-      return res.status(400).json({ error: 'Error uploading file' });
+      return response.status(400).json({ error: 'Error uploading file' });
     }
 
-    if (!req.file) {
-      return res.status(400).json({ error: 'No file uploaded' });
+    if (!request.file) {
+      return response.status(400).json({ error: 'No file uploaded' });
     }
 
-    const filename = (req.file as any).filename;
-    const filePath = `./public/upload/users/${filename}`;
+    const filename = (request.file as any).filename;
 
-    res.status(200).json({
-      message: 'Upload successful',
-      filePath: filePath,
-    });
+    try {
+      const eventRepository = getRepository(Events);
+
+      const existingEvent = await eventRepository.findOne({ where: { id: parseInt(id, 10) } });
+      if (!existingEvent) {
+        return response.status(404).json({ message: 'Event not found!' });
+      }
+
+      await eventRepository.update(id, {
+        imageURL: filename,
+      });
+
+      return response.status(200).json({
+        message: 'Upload successful',
+        filePath: `./public/upload/users/${filename}`,
+      });
+    } catch (error) {
+      return response.status(500).json({ error: 'Internal server error' });
+    }
   });
 };
 

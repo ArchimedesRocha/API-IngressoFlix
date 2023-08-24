@@ -14,6 +14,6 @@ routes.put('/events/:id', updateEvents )
 routes.patch('/events/:id', finishedEvent )
 routes.delete('/events/:id', deleteEvent )
 routes.post('/create', createEvents )
-routes.post('/upload-image', uploadImageEvent);
+routes.post('/events/:id/upload-image', uploadImageEvent);
 
 export default routes
