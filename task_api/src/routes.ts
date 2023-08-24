@@ -1,6 +1,6 @@
 import { Router, Request, Response } from 'express'
 
-import { getEvents, saveEvents, getEventID, updateEvents, finishedEvent, deleteEvent, uploadEventImage } from './controller/EventsController';
+import { getEvents, createEvents, getEventID, updateEvents, finishedEvent, deleteEvent, uploadImageEvent,  } from './controller/EventsController';
 
 const routes = Router()
 
@@ -13,7 +13,7 @@ routes.get('/events/:id', getEventID )
 routes.put('/events/:id', updateEvents )
 routes.patch('/events/:id', finishedEvent )
 routes.delete('/events/:id', deleteEvent )
-routes.post('/create', saveEvents )
-routes.post('/events/:id', uploadEventImage)
+routes.post('/create', createEvents )
+routes.post('/upload-image', uploadImageEvent);
 
 export default routes

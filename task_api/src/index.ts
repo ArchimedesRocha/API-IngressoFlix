@@ -4,7 +4,7 @@ import * as express from "express"
 import * as bodyParser from "body-parser"
 import routes from "./routes"
 
-const app = express()
+const app = express();
 
 createConnection().then(() => {
   console.log("Connected to the database");

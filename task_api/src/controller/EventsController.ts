@@ -1,13 +1,17 @@
 import { getRepository } from "typeorm";
 import { Events } from '../entity/Event'
 import { Request, Response } from "express";
+import * as multer from 'multer';
 
+//=======================================================
 // Buscar todos os eventos
 export const getEvents = async (resquest: Request, response: Response) => {
   const events = await getRepository(Events).find()
   return response.json(events)
 };
+//=======================================================
 
+//=======================================================
 // Buscar evento por ID
 export const getEventID = async (request: Request, response: Response) => {
   const { id } = request.params
@@ -16,11 +20,13 @@ export const getEventID = async (request: Request, response: Response) => {
 }
 
 // Criar evento
-export const saveEvents = async (request: Request, response: Response) => {
+export const createEvents = async (request: Request, response: Response) => {
   const events = await getRepository(Events).save(request.body)
   return response.json(events)
 }
+//=======================================================
 
+//=======================================================
 // Atualizar evento
 export const updateEvents = async (request: Request, response: Response) => {
   const { id } = request.params
@@ -33,37 +39,58 @@ export const updateEvents = async (request: Request, response: Response) => {
 
   return response.status(404).json({ message: 'Event not found!'})
 }
+//=======================================================
 
-// Upar imagem
-export const uploadEventImage = async (request: Request, response: Response) => {
-  console.log("Request Body:", request.body);
-  console.log("Request Files:", request.files);
-  console.log("Request ID", request.params);
+//=======================================================
+// Upar imagem do evento
 
-  const imageFile = request.file; // Arquivo de imagem enviado
-  const { id } = request.params;
+const storage = multer.diskStorage({
+  destination: function (req, file, cb) {
+    cb(null, './public/upload/users');
+  },
+  filename: function (req, file, cb) {
+    cb(null, Date.now().toString() + '-' + file.originalname);
+  },
+});
 
-  if (!imageFile) {
-    return response.status(400).json({ message: 'No image uploaded!' });
-  }
-  
-  // Construir a URL da imagem baseada no caminho do arquivo no servidor
-  const imageURL = `http://localhost:3333/events/${id}/${imageFile.filename}`;
-  console.log("Image URL:", imageURL);
+const upload = multer({
+  storage: storage,
+  fileFilter: function (req, file, cb) {
+    const extendImage = ['image/png', 'image/jpg', 'image/jpeg'].find(
+      (formAccepted) => formAccepted == file.mimetype
+    );
 
-  // Atualizar o evento com a URL da imagem
-  await getRepository(Events).update(id, { imageURL });
+    if (extendImage) {
+      return cb(null, true);
+    }
+    return cb(null, false);
+  },
+});
 
-  // Buscar o evento atualizado
-  const eventUpdated = await getRepository(Events).findOne({ where: { id: parseInt(id, 10) } });
+export const uploadImageEvent = (req: Request, res: Response) => {
+  upload.single('image')(req, res, (err) => {
+    if (err) {
+      return res.status(400).json({ error: 'Error uploading file' });
+    }
 
-  if (eventUpdated) {
-    return response.json(eventUpdated);
-  } else {
-    return response.status(404).json({ message: 'Event not found!' });
-  }
+    if (!req.file) {
+      return res.status(400).json({ error: 'No file uploaded' });
+    }
+
+    const filename = (req.file as any).filename;
+    const filePath = `./public/upload/users/${filename}`;
+
+    res.status(200).json({
+      message: 'Upload successful',
+      filePath: filePath,
+    });
+  });
 };
 
+
+//=======================================================
+
+//=======================================================
 // Finalizar evento
 export const finishedEvent = async (request: Request, response: Response) => {
   const { id } = request.params
@@ -78,7 +105,9 @@ export const finishedEvent = async (request: Request, response: Response) => {
 
   return response.status(404).json({ message: 'Event not found!'})
 }
+//=======================================================
 
+//=======================================================
 // Deletar evento
 export const deleteEvent = async (request: Request, response: Response) => {
   const { id } = request.params
@@ -91,4 +120,5 @@ export const deleteEvent = async (request: Request, response: Response) => {
 
   return response.status(404).json({ message: 'Event not found!'})
 }
+//=======================================================
 
