@@ -49,7 +49,9 @@ const storage = multer.diskStorage({
     cb(null, './public/upload/users');
   },
   filename: function (req, file, cb) {
-    cb(null, Date.now().toString() + '-' + file.originalname);
+    const originalname = file.originalname;
+    const filenameWithoutSpaces = originalname.replace(/\s+/g, '-'); // Substituir espaços por "-"
+    cb(null, Date.now().toString() + '-' + filenameWithoutSpaces);
   },
 });
 
