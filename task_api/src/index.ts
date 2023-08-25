@@ -5,7 +5,7 @@ import * as bodyParser from "body-parser";
 import routes from "./routes";
 
 const app = express();
-const PORT = process.env.PORT || 3333; // Usará a porta fornecida pelo Heroku, ou a porta 3333 se estiver executando localmente.
+const PORT = process.env.PORT || 3333;
 
 createConnection()
   .then(() => {
