@@ -1,7 +1,6 @@
 import { getRepository } from "typeorm";
 import { Events } from '../entity/Event'
 import { Request, Response } from "express";
-import * as multer from 'multer';
 
 //=======================================================
 // Buscar todos os eventos
