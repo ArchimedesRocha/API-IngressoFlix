@@ -5,7 +5,7 @@ import { getEvents, createEvents, getEventID, updateEvents, finishedEvent, delet
 const routes = Router()
 
 routes.get('/', (request: Request, response: Response) => {
-    return response.json({ message: 'Bem-vindo ao Projeto Didático de Gerenciamento de Eventos com TypeScript, Express, TypeORM e muito mais!' });
+    return response.json({ message: 'Bem-vindo ao Projeto Didático de Gerenciamento de Eventos com TypeScript, Express e TypeORM!' });
 });
 
 
