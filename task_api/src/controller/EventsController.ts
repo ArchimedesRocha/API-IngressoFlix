@@ -44,68 +44,6 @@ export const updateEvents = async (request: Request, response: Response) => {
 //=======================================================
 // Upar imagem do evento
 
-const storage = multer.diskStorage({
-  destination: function (req, file, cb) {
-    cb(null, './public/upload/users');
-  },
-  filename: function (req, file, cb) {
-    const originalname = file.originalname;
-    const filenameWithoutSpaces = originalname.replace(/\s+/g, '-'); // Substituir espaços por "-"
-    cb(null, Date.now().toString() + '-' + filenameWithoutSpaces);
-  },
-});
-
-const upload = multer({
-  storage: storage,
-  fileFilter: function (req, file, cb) {
-    const extendImage = ['image/png', 'image/jpg', 'image/jpeg'].find(
-      (formAccepted) => formAccepted == file.mimetype
-    );
-
-    if (extendImage) {
-      return cb(null, true);
-    }
-    return cb(null, false);
-  },
-});
-
-export const uploadImageEvent = async (request: Request, response: Response) => {
-  const { id } = request.params; // Obtém o ID do evento da rota
-
-  upload.single('image')(request, response, async (err) => {
-    if (err) {
-      return response.status(400).json({ error: 'Error uploading file' });
-    }
-
-    if (!request.file) {
-      return response.status(400).json({ error: 'No file uploaded' });
-    }
-
-    const filename = (request.file as any).filename;
-
-    try {
-      const eventRepository = getRepository(Events);
-
-      const existingEvent = await eventRepository.findOne({ where: { id: parseInt(id, 10) } });
-      if (!existingEvent) {
-        return response.status(404).json({ message: 'Event not found!' });
-      }
-
-      await eventRepository.update(id, {
-        imageURL: filename,
-      });
-
-      return response.status(200).json({
-        message: 'Upload successful',
-        filePath: `./public/upload/users/${filename}`,
-      });
-    } catch (error) {
-      return response.status(500).json({ error: 'Internal server error' });
-    }
-  });
-};
-
-
 //=======================================================
 
 //=======================================================
