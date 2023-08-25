@@ -1,4 +1,4 @@
-# Projeto Incrível Construído com TypeORM
+# API Rest com TypeORM
 
 ## Descrição do Projeto
 Este é um projeto incrível construído com TypeORM, uma ferramenta poderosa de ORM (Object-Relational Mapping) para Node.js e TypeScript. O projeto tem como objetivo demonstrar como criar e gerenciar um aplicativo usando TypeORM para lidar com o banco de dados. Explore as etapas abaixo para executar o projeto e descubra as possibilidades que o TypeORM oferece!
