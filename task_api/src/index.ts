@@ -1,3 +1,4 @@
+import * as dotenv from "dotenv";
 import "reflect-metadata";
 import { createConnection } from "typeorm";
 import * as express from "express";
@@ -17,6 +18,8 @@ createConnection()
 
 app.use(bodyParser.json());
 app.use(routes);
+
+dotenv.config();
 
 app.listen(PORT, () => {
   console.log(`Server is running on port ${PORT}`);
