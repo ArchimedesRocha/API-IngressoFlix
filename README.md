@@ -37,4 +37,10 @@ Este é um projeto incrível construído com TypeORM, uma ferramenta poderosa de
 
 6. **Verificar o Status do Aplicativo:** Verifique o status atual do aplicativo [aqui](https://api-app-ticketflix-eb6fdcd3309d.herokuapp.com/). Isso confirmará que o aplicativo está online e operacional.
 
+7. **Verificar todos os passos de desenvolvimento:** Verifique toda a trajetória de desenvolvimento até a conclusão desta API [aqui](https://archimedesrocha.com.br/how-to-create-api-rest/). Com estas instruções você vai entender perfeitamente tudo o que foi feito.
+
+8. **Fale comigo diretamente no WhatsApp:** [82 98886-1433](https://api.whatsapp.com/send?phone=5582988861433&text=Fale%20comigo%20diretamente)
+
+9. **Conecte-se comigo no LinkedIn:** [Conecte-se comigo](https://www.linkedin.com/in/archimedesrocha-desenvolvedor/)
+
 Ao seguir esses passos, você estará pronto para explorar este projeto incrível construído com TypeORM. Esta é uma excelente oportunidade para aprofundar seus conhecimentos em ORM, desenvolvimento de aplicativos e criação de APIs em Node.js e TypeScript. Divirta-se explorando e experimentando tudo o que este projeto tem a oferecer!
