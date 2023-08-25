@@ -5,8 +5,9 @@ import { getEvents, createEvents, getEventID, updateEvents, finishedEvent, delet
 const routes = Router()
 
 routes.get('/', (request: Request, response: Response) => {
-    return response.json({ message:'Hello World!' })
-})
+    return response.json({ message: 'Bem-vindo ao Projeto Didático de Gerenciamento de Eventos!' });
+});
+
 
 routes.get('/events', getEvents)
 routes.get('/events/:id', getEventID )
