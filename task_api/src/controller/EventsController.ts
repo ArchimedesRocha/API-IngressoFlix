@@ -50,13 +50,14 @@ const storage = multer.diskStorage({
   },
   filename: function (req, file, cb) {
     const originalname = file.originalname;
-    const filenameWithoutSpaces = originalname.replace(/\s+/g, '-'); // Substituir espaços por "-"
+    const filenameWithoutSpaces = originalname.replace(/\s+/g, '-');
     cb(null, Date.now().toString() + '-' + filenameWithoutSpaces);
   },
 });
 
 const upload = multer({
   storage: storage,
+  limits: { fileSize: 200 * 1024 },
   fileFilter: function (req, file, cb) {
     const extendImage = ['image/png', 'image/jpg', 'image/jpeg'].find(
       (formAccepted) => formAccepted == file.mimetype
